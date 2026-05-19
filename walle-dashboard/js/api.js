@@ -1,9 +1,7 @@
-// ─────────────────────────────────────────────────────────────
 //  api.js — Communications avec la Raspberry Pi
 //  Dépend de : config.js, ui.js, charts.js
-// ─────────────────────────────────────────────────────────────
 
-// ── Polling des données capteurs (/data) ─────────────────────
+// Polling des données capteurs (/data)
 async function pollData() {
   try {
     const res  = await fetch(BASE_URL + '/data');
@@ -37,7 +35,7 @@ async function pollData() {
   }
 }
 
-// ── Rafraîchissement de l'image caméra ──────────────────────
+// Rafraîchissement de l'image caméra
 // Image statique servie par FastAPI StaticFiles.
 // Sur la Pi, dans main.py :
 //   from fastapi.staticfiles import StaticFiles
@@ -51,18 +49,18 @@ function refreshCamera() {
   document.getElementById('cam-ts').textContent = new Date().toLocaleTimeString('fr-FR');
 }
 
-// ── Validation classification (page 2) ──────────────────────
+// Validation classification (page 2)
 // result : 'correct' | 'incorrect' | 'skip'
 let sessionCorrect   = 0;
 let sessionIncorrect = 0;
 
 async function sendValidation(result) {
   if (result === 'skip') {
-    showFeedback('skip', '⏭ Ignoré — image non exploitable');
+    showFeedback('skip', 'Ignoré - image non exploitable');
     return;
   }
 
-  showFeedback('pend', '↺ Envoi en cours...');
+  showFeedback('pend', 'Envoi en cours...');
 
   try {
     const res  = await fetch(BASE_URL + '/validate', {
@@ -73,7 +71,7 @@ async function sendValidation(result) {
     const data = await res.json();
 
     const label = result === 'correct' ? 'CORRECT' : 'INCORRECT';
-    showFeedback('ok', `✓ Pi a reçu : ${label}` + (data.message ? ' — ' + data.message : ''));
+    showFeedback('ok', `Pi a reçu : ${label}` + (data.message ? ' — ' + data.message : ''));
 
     if (result === 'correct') {
       sessionCorrect++;
@@ -84,11 +82,11 @@ async function sendValidation(result) {
     }
 
   } catch (err) {
-    showFeedback('err', '✗ Erreur — Raspberry Pi injoignable');
+    showFeedback('err', 'Erreur - Raspberry Pi injoignable');
   }
 }
 
-// ── Envoi d'une commande moteur (page 3) ─────────────────────
+// Envoi d'une commande moteur (page 3)
 async function sendCommand(part, action) {
   const log  = document.getElementById('cmd-log');
   const ts   = new Date().toLocaleTimeString('fr-FR');
@@ -106,10 +104,10 @@ async function sendCommand(part, action) {
     });
     const data = await res.json();
     line.className   = 'll s';
-    line.innerHTML  += `<span class="ack ok">✓ ${data.ack || 'ACK'}</span>`;
+    line.innerHTML  += `<span class="ack ok">${data.ack || 'ACK'}</span>`;
   } catch (err) {
     line.className   = 'll e';
-    line.innerHTML  += `<span class="ack err">✗ no route</span>`;
+    line.innerHTML  += `<span class="ack err">no route</span>`;
   }
 
   // Garder le log sous 60 lignes

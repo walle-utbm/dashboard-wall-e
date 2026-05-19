@@ -1,12 +1,10 @@
-// ─────────────────────────────────────────────────────────────
 //  charts.js — Initialisation et mise à jour des graphiques
 //  Dépend de : Chart.js (chargé dans index.html)
-// ─────────────────────────────────────────────────────────────
 
 Chart.defaults.color        = '#64748b';
 Chart.defaults.borderColor  = 'rgba(245,158,11,.07)';
 
-// ── Fabrique un graphique en ligne ──────────────────────────
+// Fabrique un graphique en ligne
 function makeLineChart(canvasId, hexColor, yMax) {
   const h = hexColor.replace('#', '');
   const r = parseInt(h.slice(0, 2), 16);
@@ -43,7 +41,7 @@ function makeLineChart(canvasId, hexColor, yMax) {
   });
 }
 
-// ── Ajoute un point, supprime les plus anciens ──────────────
+// Ajoute un point, supprime les plus anciens
 function pushChart(chart, value, maxPoints = 60) {
   chart.data.labels.push('');
   chart.data.datasets[0].data.push(value);

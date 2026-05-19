@@ -1,9 +1,7 @@
-// ─────────────────────────────────────────────────────────────
 //  config.js — Paramètres globaux
 //  Modifier BASE_URL si la Pi change d'adresse.
-//  Si le dashboard est servi directement par la Pi (recommandé),
+//  Si le dashboard est servi directement par la Pi,
 //  laisser BASE_URL = "" pour utiliser des URLs relatives.
-// ─────────────────────────────────────────────────────────────
 
 const BASE_URL = "http://192.168.137.160:8000";  // "" si servi par la Pi
 const POLL_MS  = 500;   // Intervalle de polling des données (ms)

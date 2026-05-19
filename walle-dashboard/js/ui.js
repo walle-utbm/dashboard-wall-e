@@ -1,9 +1,7 @@
-// ─────────────────────────────────────────────────────────────
 //  ui.js — Mise à jour des composants visuels du DOM
 //  Dépend de : config.js, charts.js
-// ─────────────────────────────────────────────────────────────
 
-// ── Batterie ────────────────────────────────────────────────
+// Batterie
 function setBattery(pct) {
   const value = parseFloat(pct).toFixed(1);  // 1 décimale
   document.getElementById('batt-val').innerHTML =
@@ -16,7 +14,7 @@ function setBattery(pct) {
   const lbl = document.getElementById('batt-lbl');
   if (pct <= 20) {
     fill.classList.add('low');
-    lbl.textContent = '⚠ Faible';  lbl.style.color = 'var(--red)';
+    lbl.textContent = 'Faible';  lbl.style.color = 'var(--red)';
   } else if (pct <= 50) {
     fill.classList.add('med');
     lbl.textContent = 'Moyenne';   lbl.style.color = 'var(--accent)';
@@ -26,7 +24,7 @@ function setBattery(pct) {
   }
 }
 
-// ── Température — affichage adapté à la plage TEMP_MIN/TEMP_MAX ─
+// Température - affichage adapté à la plage TEMP_MIN/TEMP_MAX
 function setTemperature(t) {
   const N = 16;
   document.getElementById('temp-val').innerHTML =
@@ -48,10 +46,10 @@ function setTemperature(t) {
   const lbl = document.getElementById('temp-lbl');
   if      (t < TEMP_MIN + 5) { lbl.textContent = 'Nominal'; lbl.style.color = 'var(--green)'; }
   else if (t < TEMP_MAX - 2) { lbl.textContent = 'Chaud';   lbl.style.color = 'var(--accent)'; }
-  else                        { lbl.textContent = '⚠ Élevé'; lbl.style.color = 'var(--red)'; }
+  else                        { lbl.textContent = 'Élevé'; lbl.style.color = 'var(--red)'; }
 }
 
-// ── Vitesse socle ────────────────────────────────────────────
+// Vitesse socle
 function setSpeed(v) {
   document.getElementById('spd-val').innerHTML = v + '<span class="sc-unit"> /20</span>';
   const sub = document.getElementById('spd-sub');
@@ -60,7 +58,7 @@ function setSpeed(v) {
   else              { sub.textContent = 'Rapide';  sub.style.color = 'var(--green)'; }
 }
 
-// ── Compteurs déchets + taux de réussite ────────────────────
+// Compteurs déchets + taux de réussite
 function setWaste(correct, incorrect) {
   document.getElementById('correct-val').textContent   = correct;
   document.getElementById('incorrect-val').textContent = incorrect;
@@ -71,19 +69,19 @@ function setWaste(correct, incorrect) {
   pieChart.update();
 }
 
-// ── Statut de connexion (header) ─────────────────────────────
+// Statut de connexion (header)
 function setStatus(online) {
   document.getElementById('status-dot').className   = online ? 'dot' : 'dot err';
   document.getElementById('status-text').textContent = online ? 'CONNECTÉ' : 'DÉCONNECTÉ';
 }
 
-// ── Horodatage (header) ──────────────────────────────────────
+// Horodatage (header)
 function setTimestamp() {
   document.getElementById('last-ts').textContent =
     new Date().toLocaleTimeString('fr-FR');
 }
 
-// ── Feedback validation (page 2) ─────────────────────────────
+// Feedback validation (page 2)
 function showFeedback(type, message, durationMs = 3500) {
   const fb = document.getElementById('val-fb');
   fb.style.display = 'block';

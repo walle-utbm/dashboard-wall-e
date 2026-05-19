@@ -1,7 +1,5 @@
-// ─────────────────────────────────────────────────────────────
-//  main.js — Point d'entrée : initialisation et boucles
+//  main.js - Point d'entrée : initialisation et boucles
 //  Dépend de : config.js, nav.js, ui.js, charts.js, api.js
-// ─────────────────────────────────────────────────────────────
 
 function init() {
   // État initial de l'interface avant le premier poll

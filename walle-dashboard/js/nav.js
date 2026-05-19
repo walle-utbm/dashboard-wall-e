@@ -1,6 +1,4 @@
-// ─────────────────────────────────────────────────────────────
 //  nav.js — Gestion de la navigation entre les pages
-// ─────────────────────────────────────────────────────────────
 
 const TAB_KEYS = ['dashboard', 'validation', 'control'];
 

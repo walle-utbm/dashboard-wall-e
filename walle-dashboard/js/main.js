@@ -8,11 +8,10 @@ function init() {
   setSpeed(0);
 
   // Premier appel immédiat
-  pollData();
+  startSSE();
   refreshCamera();
 
-  // Boucles périodiques
-  setInterval(pollData,     POLL_MS);
+  // Boucle périodique
   setInterval(refreshCamera, CAM_MS);
 }
 

@@ -2,6 +2,7 @@
 //  Dépend de : config.js, ui.js, charts.js
 
 // Polling des données capteurs (/data)
+/*
 async function pollData() {
   try {
     const res  = await fetch(BASE_URL + '/data');
@@ -34,6 +35,47 @@ async function pollData() {
     setStatus(false);
   }
 }
+*/
+
+function startSSE() {
+    const es = new EventSource(BASE_URL + '/stream');
+
+    es.onopen = () => {
+        setStatus(true);
+        setTimestamp();
+    };
+
+    es.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        setStatus(true);
+        setTimestamp();
+        
+	// Vitesse socle
+    	const spd = data.speed || 0;
+    	setSpeed(spd);
+
+    	// Temps de tri
+    	if (data.processing_time != null) {
+      		const pt = parseFloat(data.processing_time).toFixed(1);
+      		document.getElementById('proc-val').textContent = pt + ' s';
+    	}
+
+    	if (data.battery     != null) setBattery(data.battery);
+    	if (data.temperature != null) setTemperature(data.temperature);
+
+    	// Déchets — mis à jour uniquement via /validate (pas d'auto-incrément côté Pi)
+    	setWaste(data.nb_objects_correct || 0, data.nb_objects_incorrect || 0);
+
+    	// Dernière classification (page 2)
+    	if (data.last_class)
+      		document.getElementById('robot-class').textContent = data.last_class.toUpperCase();
+    };
+
+    es.onerror = () => {
+        setStatus(false);
+    };
+}
+
 
 // Rafraîchissement de l'image caméra
 // Image statique servie par FastAPI StaticFiles.
